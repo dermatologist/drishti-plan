@@ -3,6 +3,7 @@ Define an Abstract Base Class (ABC) for models
 """
 from datetime import datetime
 from weakref import WeakValueDictionary
+
 from sqlalchemy import inspect
 from sqlalchemy.orm import aliased
 
@@ -14,7 +15,7 @@ class MetaBaseModel(db.Model.__class__):
         Implement `__getitem__` for managing aliases """
 
     def __init__(cls, *args):
-        super().__init__(*args)
+        super.__init__(*args)
         cls.aliases = WeakValueDictionary()
 
     def __getitem__(cls, key):
