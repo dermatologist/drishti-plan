@@ -57,12 +57,24 @@ finally:
     patient_ref2 = r.FHIRReference()
     patient_ref2.reference = u'Patient/' + patient_dict['id']
 
-    print patient_ref2.reference
+    # print patient_ref2.reference
 
     careplan_to_write.description = 'Drishti Plan'
     careplan_to_write.status = 'active'
     careplan_to_write.intent = 'plan'
     careplan_to_write.subject = patient_ref2
 
-    print careplan_to_write.as_json()
+    #print careplan_to_write.as_json()
     careplan_to_write.create(smart.server)
+
+    import fhirclient.models.bundle as bundle
+
+    search = bundle.Bundle.where(struct={"identifier": "d4970147-dff5-43e7-a7c8-a326f98874a6"})
+    procedures = search.perform_resources(smart.server)
+    for procedure in procedures:
+        procedure.as_json()
+        # {'status': u'completed', 'code': {'text': u'Lumpectomy w/ SN', ...
+
+    # to get the raw Bundle instead of resources only, you can use:
+    bundle = search.perform(smart.server)
+    print bundle.as_json()
