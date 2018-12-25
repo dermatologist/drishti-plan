@@ -1,7 +1,18 @@
 from drishti import Drishti
 
 d = Drishti()
-print d.get_bundle().as_json()
+
+print d.create_bundle()
+
+# for resource in resources:
+#     #print resource.as_json()
+#     try:
+#         o = oc.ObservationComponent()
+#         o = resource.component
+#         print o[0].valueQuantity.value
+#     except:
+#         print "None"
+
 # from fhirclient import client
 #
 # settings = {

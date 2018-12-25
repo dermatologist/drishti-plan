@@ -2,6 +2,7 @@ import os
 
 import fhirclient.models.bundle as bundle
 import fhirclient.models.careplan as careplan
+import fhirclient.models.codeableconcept as codeconcept
 import fhirclient.models.fhirreference as reference
 import fhirclient.models.identifier as identifier
 import fhirclient.models.patient as patient
@@ -32,10 +33,23 @@ class Drishti():
         b = bundle.Bundle()
         p = patient.Patient()
         c = careplan.CarePlan()
+
+        ca = careplan.CarePlanActivity()
+        cad = careplan.CarePlanActivityDetail()
+        concept = codeconcept.CodeableConcept()
+        concept.text = "6397004"
+        cad.code = concept
+        cad.status = 'scheduled'
+        ca.detail = cad
+
         i = identifier.Identifier()
         i.system = os.getenv('IDENTIFIER_SYSTEM', 'urn:system')
         i.value = uuid
         c.identifier = [i]
+
+        if self.get_steps(uuid) < 5000:
+            c.activity = [ca]
+
         p.identifier = [i]
         b.identifier = i
 
@@ -57,3 +71,28 @@ class Drishti():
         b.type = "document"
 
         b.create(self.smart.server)
+
+    def get_steps(self, uuid="d4970147-dff5-43e7-a7c8-a326f98874a6"):
+        b = self.get_bundle(uuid)
+
+        # Take the first bundle
+        resources = []
+        if b.entry is not None:
+            for entry in b.entry:
+                resources.append(entry.resource)
+
+        # Second iteration
+        b = resources[0]
+        resources = []
+        if b.entry is not None:
+            for entry in b.entry:
+                resources.append(entry.resource)
+
+        steps = 0
+        for resource in resources:
+            try:
+                o = resource.component
+                steps += o[0].valueQuantity.value
+            except:
+                steps += 0
+        return steps
