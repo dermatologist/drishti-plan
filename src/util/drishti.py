@@ -47,7 +47,8 @@ class Drishti():
         i.value = uuid
         c.identifier = [i]
 
-        if self.get_steps(uuid) < 5000:
+        if self.get_steps(uuid) < 8000:
+            print self.get_steps(uuid)
             c.activity = [ca]
 
         p.identifier = [i]
@@ -82,17 +83,18 @@ class Drishti():
                 resources.append(entry.resource)
 
         # Second iteration
-        b = resources[0]
-        resources = []
-        if b.entry is not None:
-            for entry in b.entry:
-                resources.append(entry.resource)
-
         steps = 0
-        for resource in resources:
-            try:
-                o = resource.component
-                steps += o[0].valueQuantity.value
-            except:
-                steps += 0
+        if len(resources) > 1:
+            b = resources[0]
+            resources = []
+            if b.entry is not None:
+                for entry in b.entry:
+                    resources.append(entry.resource)
+
+            for resource in resources:
+                try:
+                    o = resource.component
+                    steps += o[0].valueQuantity.value
+                except:
+                    steps += 0
         return steps
