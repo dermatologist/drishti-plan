@@ -16,9 +16,9 @@ class UserResource(Resource):
 
     @staticmethod
     @swag_from('../swagger/user/GET.yml')
-    def get(last_name, first_name):
+    def get(uuid):
         """ Return an user key information based on his name """
-        user = UserRepository.get(last_name=last_name, first_name=first_name)
+        user = UserRepository.get(uuid=uuid)
         return jsonify({'user': user.json})
 
     @staticmethod
@@ -26,16 +26,24 @@ class UserResource(Resource):
         Argument(
             'age',
             location='json',
-            required=True,
+            required=False,
             help='The age of the user.'
         ),
+        Argument(
+            'uuid',
+            location='json',
+            required=True,
+            help='The uuid of the user.'
+        ),
+
     )
     @swag_from('../swagger/user/POST.yml')
-    def post(last_name, first_name, age):
+    def post(last_name, first_name, uuid, age):
         """ Create an user based on the sent information """
         user = UserRepository.create(
             last_name=last_name,
             first_name=first_name,
+            uuid=uuid,
             age=age
         )
         return jsonify({'user': user.json})
@@ -45,17 +53,25 @@ class UserResource(Resource):
         Argument(
             'age',
             location='json',
-            required=True,
+            required=False,
             help='The age of the user.'
         ),
+        Argument(
+            'uuid',
+            location='json',
+            required=True,
+            help='The uuid of the user.'
+        ),
+
     )
     @swag_from('../swagger/user/PUT.yml')
-    def put(last_name, first_name, age):
+    def put(last_name, first_name, uuid, age):
         """ Update an user based on the sent information """
         repository = UserRepository()
         user = repository.update(
             last_name=last_name,
             first_name=first_name,
+            uuid=uuid,
             age=age
         )
         return jsonify({'user': user.json})

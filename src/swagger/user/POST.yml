@@ -3,14 +3,10 @@ Create an user based on the sent information
 tags:
   - user
 parameters:
-  - name: last_name
+  - name: uuid
     in: path
     type: string
-    description: the last name of the user
-  - name: first_name
-    in: path
-    type: string
-    description: the last name of the user
+    description: the uuid of the user
   - name: body
     in: body
     schema:
@@ -19,6 +15,12 @@ parameters:
         age:
           type: integer
           description: The age of the user
+        first_name:
+          type: string
+          description: The first name of the user
+        last_name:
+          type: string
+          description: The last name of the user
 responses:
   200:
     description: The user was successfully created
