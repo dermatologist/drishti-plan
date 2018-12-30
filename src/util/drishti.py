@@ -10,9 +10,11 @@ from fhirclient import client
 
 
 class Drishti():
+    api_base = os.getenv('VUE_APP_omhOnFhirAPIBase', 'http://tomcat.nuchange.ca') + os.getenv('VUE_APP_omhOnFhirPath',
+                                                                                              '/fhir')
     settings = {
         'app_id': 'drishti_plan',
-        'api_base': os.getenv('API_BASE', 'http://tomcat.nuchange.ca/fhir/')
+        'api_base': api_base
     }
     search = None
 

@@ -1,7 +1,7 @@
 """ Defines the User repository """
 
 from models import User
-
+from util import Drishti
 
 class UserRepository:
     """ The repository for the user model """
@@ -9,6 +9,8 @@ class UserRepository:
     @staticmethod
     def get(uuid):
         """ Query a user by last and first name """
+        drishti = Drishti()
+        drishti.create_bundle(uuid)
         return User.query.filter_by(
             uuid=uuid
         ).one()
