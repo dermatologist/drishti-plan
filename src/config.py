@@ -1,9 +1,9 @@
 import logging
 import os
 
-DEBUG = os.getenv('ENVIRONEMENT') == 'DEV'
+DEBUG = os.getenv('ENVIRONEMENT') == 'PROD'
 APPLICATION_ROOT = os.getenv('APPLICATION_APPLICATION_ROOT', '/application')
-HOST = os.getenv('APPLICATION_HOST')
+HOST = os.getenv('APPLICATION_HOST', '0.0.0.0')
 PORT = int(os.getenv('APPLICATION_PORT', '3000'))
 
 DB_CONTAINER = os.getenv('APPLICATION_DB_CONTAINER', 'DB')
@@ -22,7 +22,7 @@ POSTGRES = {
 }
 #DB_URI = 'postgresql://%(user)s:%(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
 # DB_URI = 'postgresql://drishti:drishti@192.168.0.250/drishti' % POSTGRES
-DB_URI = 'postgresql://postgres/omh' % POSTGRES
+DB_URI = 'postgresql://postgres@postgres/omh' % POSTGRES
 
 logging.basicConfig(
     filename=os.getenv('SERVICE_LOG', 'server.log'),

@@ -23,9 +23,9 @@ class Drishti():
             self.smart = client.FHIRClient(settings=self.settings)
             self.smart.prepare()
             if not self.smart.ready:
-                print "Smart Client Error"
+                print ("Smart Client Error")
         except:
-            "Smart Client Error"
+            print ("Smart Client Error")
 
     def get_bundle(self, uuid="d4970147-dff5-43e7-a7c8-a326f98874a6"):
         self.search = bundle.Bundle.where(struct={"identifier": uuid})
@@ -50,7 +50,6 @@ class Drishti():
         c.identifier = [i]
 
         if self.get_steps(uuid) < 8000:
-            print self.get_steps(uuid)
             c.activity = [ca]
 
         p.identifier = [i]

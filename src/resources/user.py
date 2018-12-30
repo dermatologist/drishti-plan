@@ -30,10 +30,16 @@ class UserResource(Resource):
             help='The age of the user.'
         ),
         Argument(
-            'uuid',
+            'first_name',
             location='json',
-            required=True,
-            help='The uuid of the user.'
+            required=False,
+            help='The first name of the user.'
+        ),
+        Argument(
+            'last_name',
+            location='json',
+            required=False,
+            help='The last name of the user.'
         ),
 
     )
@@ -57,10 +63,16 @@ class UserResource(Resource):
             help='The age of the user.'
         ),
         Argument(
-            'uuid',
+            'first_name',
             location='json',
-            required=True,
-            help='The uuid of the user.'
+            required=False,
+            help='The first name of the user.'
+        ),
+        Argument(
+            'last_name',
+            location='json',
+            required=False,
+            help='The last name of the user.'
         ),
 
     )
